@@ -1,7 +1,7 @@
 "use strict";
 
 export class Timer {
-  constructor(workTime, breakTime) {
+  constructor(workTime, breakTime, onTick) {
     this.workTime = workTime;
     this.breakTime = breakTime;
 
@@ -12,6 +12,7 @@ export class Timer {
     this.sessionCompleted = 0;
 
     this.intervalId = null;
+    this.onTick = onTick
   }
 
   start() {
@@ -35,6 +36,8 @@ export class Timer {
     this.minutes = this.mode === "work" ? this.workTime : this.breakTime;
     this.seconds = 0;
     this.isRunning = false;
+
+    if (this.onTick) this.onTick()
   }
 
   tick() {
@@ -46,11 +49,13 @@ export class Timer {
     }
 
     if (this.minutes < 0) {
-      this.switchedMode();
+      this.switchMode();
     }
+
+    if (this.onTick) this.onTick()
   }
 
-  switchedMode() {
+  switchMode() {
     if (this.mode === "work") {
       this.mode = "break";
       this.minutes = this.breakTime;

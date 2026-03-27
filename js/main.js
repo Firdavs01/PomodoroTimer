@@ -3,9 +3,13 @@
 import { Timer } from "./timer.js";
 import { settings } from "./settings.js";
 
-import { pauseBtnElements, resetBtnElements, startBtnElements } from "./elements.js";
+import { formatTime } from "./renderTime.js";
 
-const timer = new Timer(settings.workTime, settings.breakTime)
+import { pauseBtnElements, resetBtnElements, startBtnElements, display } from "./elements.js";
+
+const timer = new Timer(settings.workTime, settings.breakTime, () => {
+    display.textContent = formatTime(timer.minutes, timer.seconds)
+})
 
 startBtnElements.addEventListener("click", () => {
     timer.start()
