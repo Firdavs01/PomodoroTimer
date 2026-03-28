@@ -1,11 +1,13 @@
 "use strict";
 
+import { settings } from "./settings.js";
+
 export class Timer {
   constructor(workTime, breakTime, onTick) {
     this.workTime = workTime;
     this.breakTime = breakTime;
 
-    this.minutes = workTime;
+    this.minutes = settings.workTime;
     this.seconds = 0;
     this.isRunning = false;
     this.mode = "work";
@@ -33,6 +35,10 @@ export class Timer {
   reset() {
     clearInterval(this.intervalId);
     this.intervalId = null;
+
+    this.workTime = settings.workTime
+    this.breakTime = settings.breakTime
+
     this.minutes = this.mode === "work" ? this.workTime : this.breakTime;
     this.seconds = 0;
     this.isRunning = false;

@@ -9,19 +9,17 @@ const defaultSettings = saved
     };
 
 const settings = new Proxy(defaultSettings, {
-  set(target, key, value) {
+  set(target, key, value, receiver) {
     if (typeof value !== "number" || value < 1 || value > 60) {
       throw new Error("uncorrect znacheniye");
     }
 
-    Reflect.set(target, key, value);
+    Reflect.set(target, key, value, receiver);
     localStorage.setItem("pomodoroSettings", JSON.stringify(target));
     return true;
   },
-  get(target, key) {
-    const saved = localStorage.getItem("pomodoroSettings");
-    if (saved) return JSON.parse(saved)[key];
-    return Reflect.get(target, key);
+  get(target, key, reсeiver) {
+    return Reflect.get(target, key, reсeiver);
   },
 });
 
