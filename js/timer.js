@@ -3,6 +3,9 @@
 import { settings } from "./settings.js";
 
 export class Timer {
+
+  // В констуктор пишем параметры которые нужны
+
   constructor(workTime, breakTime, onTick) {
     this.workTime = workTime;
     this.breakTime = breakTime;
